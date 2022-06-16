@@ -24,7 +24,7 @@ export default function Home(): JSX.Element {
   async function fetchImages({
     pageParam = null,
   }): Promise<ImagesQueryResponse> {
-    const { data } = await api.get('/images', {
+    const { data } = await api.get('/api/images', {
       params: {
         after: pageParam,
       },
@@ -67,7 +67,11 @@ export default function Home(): JSX.Element {
       <Box maxW={1120} px={20} mx="auto" my={20}>
         <CardList cards={formattedData} />
         {hasNextPage && (
-          <Button onClick={() => fetchNextPage()}>
+          <Button
+            onClick={() => fetchNextPage()}
+            isDisabled={!hasNextPage || isFetchingNextPage}
+            mt="40px"
+          >
             {isFetchingNextPage ? 'Carregando...' : 'Carregar mais'}
           </Button>
         )}
